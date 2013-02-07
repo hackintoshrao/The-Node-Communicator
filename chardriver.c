@@ -8,18 +8,41 @@
 
 static dev_t first; //global varible for the first device number 
 
-static int __init my_init(void) /*constructor*/
+static int __init my_init(void) 
 {
-	int ret;
+	int ret ;
+	struct device *dev;
 	
-	printk(KERN_INFO "hi!!!My driver");
-	if(( ret = alloc_chrdev_region(&region,0,3,"RAO's Driver")) < 0)
+	if((ret = alloc_chrdev_region(&dev, FIRST_MINOR,MINOR_CNT,"The Driver")) < 0)
 	{
 		return ret;
 	}
-	printk(KERN_INFO "<Major , Minor > <%d , %d >",	MAJOR(first),MINOR(first));
+
+	cdev_init(&c_dev, &driver_fops);
+	
+	if ((ret = cdev_add(&c_dev, dev , MINOR_CNT )) < 0) 
+	{
+		unregister_chrdev_region(dev,M_CNT);
+		return ret ;
+	}
+
+	if(IS_ERR(cl=class_create(THIS_MODULE,"char")))
+	{
+		cdev_del(&c_dev);
+		unregister_chrdev_region(dev , MINOR_CNT);
+		return PTR_ERR(cl);
+	}
+	if(IS_ERR(dev_t = device_create(cl , NULL , dev , NULL , "mychar%d", 0 )))
+	{
+		class_destroy(cl);
+		cdev_del(&c_dev);
+		unregister_chrdev_region( dev  , MINOR_CNT ) ;
+		return PTR_ERR( dev_ret );
+	}
+	
 	return 0;
 }
+
 static void __exit my_exit(void)
 {
 	unregister_chrdev_region(first,3);
