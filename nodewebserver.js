@@ -5,11 +5,12 @@ var http=require('http'),
 http.createServer(function(req,res) {
 	 pathname = search_path + req.url;
 	console.log(pathname);
-	path.exists(pathname,function(exits) {
+	path.exists(pathname,function(exists) {
 		if(!exists) {
 			res.writeHead(404);
 			res.write('Invalid Request , PATH doesnt exist 404 error');
 			res.end();
+			}
 		else{
 			res.setHeader('Content-Type','text/html');
 			res.writeHead(200);
