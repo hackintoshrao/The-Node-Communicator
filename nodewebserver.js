@@ -1,6 +1,6 @@
 var http=require('http'),
 	url = require('url'),
-	mime = require('mime'),
+	mime = require('mime'),//npm install mime
 	fs = require('fs'),
 	search_path='/home/karthic/mydata/codes';
 http.createServer(function(req,res) {
