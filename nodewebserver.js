@@ -33,7 +33,7 @@ http.createServer(function(req,res) {
 	     }
 	else {
 		res.writeHead(403);
-		res.write('Driver ');
+		res.write('Driver not yet loaded , error in the server ');
 		res.end();
 		}
 	});
