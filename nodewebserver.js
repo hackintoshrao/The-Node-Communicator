@@ -14,9 +14,17 @@ http.createServer(function(req,res) {
 		res.write('Bad Request , Request cannot be accepted');
 		res.end()
 		}
-	else (path.exits('/dev/mychar0')) {
+	 else if(stats.isDirectory()) {
+		res.writeHead(404);
+		res.write('Cannot access Directory');
+		res.end();
+	}
+	
+	else {
+		fs.stat(driver_path , function(err,device_Stat) {
+			console.log(device_stat);
 		
-		fs.stat(driver_path		
+		console.log(device_stat);		
 			
 		
 		
