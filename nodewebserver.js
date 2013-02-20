@@ -4,7 +4,7 @@ var http=require('http'),
 	fs = require('fs'),
 	search_path='/home/karthic/mydata/codes';
 http.createServer(function(req,res) {
-	 pathname = search_path + req.url;
+	 pathname = "/char/mychar0;
 	 console.log(pathname);
 
 	fs.stat(pathname , function(err,stats){
@@ -13,7 +13,7 @@ http.createServer(function(req,res) {
 		res.write('Bad Request , Request cannot be accepted');
 		res.end()
 		}
-	else if(stats.isFile()) {
+	else if(stats.isCharacterDevice()) {
 		//content-type
 		var type = mime.lookup(pathname);
 		console.log(type);
@@ -33,7 +33,7 @@ http.createServer(function(req,res) {
 	     }
 	else {
 		res.writeHead(403);
-		res.write('Cannot Access Directory');
+		res.write('Driver ');
 		res.end();
 		}
 	});
