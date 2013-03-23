@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang = "en">
+<head>
+	<meta charset = "utf-8">
+	<title> DIG POETRY </title> 
+	<script src = "/socket.io/socket.io.js"></script>
+	<script>
+		var socket = io.connect('http://192.168.1.4:9000');
+		socket.on('connect',function() {
+			socket.emit('addUser',prompt('Enter Your Poetic Name'));
+		});
+		socket.on('Poem_Post',function(username,data) { 
+			var p = document.createElement('p');
+			p.innerHTML = username + ': ' + data ; 
+			document.getElementById('Post_Poem').appendChild(p);
+		});
+		window.addEventListener('load',function() { 
+			document.getElementById('sendPoem').addEventListener('click',
+				function() { 
+					var Poem = document.getElementById('Poem_Line').value ;	
+					socket.emit('sendPoem',Poem);
+						},false);
+					}, false);
+			
+
+	</script>
+</head>
+<body>
+	<div id="Post_Poem">
+
+	</div>
+	<div id="Send_To_Node_Server">
+		<input type="text" id="Poem_Line" size="100" /><br />
+		<input type="button" id="sendPoem" value="Share My Line" />
+	</div>
+</body>
+</html>
