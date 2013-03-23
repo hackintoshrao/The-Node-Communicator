@@ -3,13 +3,19 @@ var express = require('express');
 var app = express();
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
-
+var fs = require('fs').createWriteStream('/dev/mychar0');
 app.configure(function() {
+	app.use(express.logger('dev'));	
+	app.use(express.favicon(__dirname + 'icon.ico');
 	app.use(express.static(__dirname + '/public'));
-	app.use(app.router);
+	app.set('view engine','jade');
+	app.set('view options',{ layout:true });
+	app.set('views',__dirname + '/views');
+	
+	
 	});
 app.get('/',function(req,res) {
-	res.send('<h1>WelCome To DIG DESIGN POETRY<br>By Shyam,Sneha and Karthic Rao :D</h1>');
+	res.render('index');
 
 	});
 
